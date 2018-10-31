@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     String result;
     String firstData;
     String link="https://jsonplaceholder.typicode.com/users";
+    StringBuffer buffer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +62,22 @@ public class MainActivity extends AppCompatActivity {
                             }
                             result=stringBuffer.toString();
                             JSONArray array=new JSONArray(result);
-                            JSONObject object=array.getJSONObject(0);
+                            JSONObject object;
+
+                            buffer = new StringBuffer();
+                            for(int i = 0 ; i < array.length() ; i++){
+                                object=array.getJSONObject(i);
                             int id=object.getInt("id");
                             String name=object.getString("name");
-                            firstData=id+" "+name;
+                            //firstData=id+" "+name;
+                                buffer.append(id+"  " +name + "\n");
                             inputStream.close();
+                            }
+//                            JSONObject object=array.getJSONObject(result.);
+//                            int id=object.getInt("id");
+//                            String name=object.getString("name");
+//                            firstData=id+" "+name;
+//                            inputStream.close();
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -75,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        textView.setText(firstData);
+                        textView.setText(buffer);
                     }
                 });
 
